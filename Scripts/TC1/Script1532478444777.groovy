@@ -8,19 +8,9 @@ import org.openqa.selenium.logging.LogEntry
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.driver.WebUIDriverType
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.util.KeywordUtil
 
-WebUIDriverType executedBrowser = DriverFactory.getExecutedBrowser()
-if (executedBrowser == WebUIDriverType.CHROME_DRIVER &&
-	System.getProperty('user.home') == 'C:\\Users\\qcq0264') {
-	// kazurayam has a special reason. I am oblidged to instanciate ChromeDriver myself.
-	// Here I open a ChromeDriver and let Katalon Studio to use it
-	System.setProperty('webdriver.chrome.driver', DriverFactory.getChromeDriverPath())
-	WebDriver driver = new ChromeDriver()
-	DriverFactory.changeWebDriver(driver)
-} else {
-	// open browser as usual
-    WebUI.openBrowser('')
-}
+WebUI.openBrowser('')
 
 WebUI.navigateToUrl('http://demoaut.katalon.com/')
 
@@ -37,7 +27,7 @@ WebUI.click(findTestObject('Page_CURA Healthcare Service/button_Login'))
 WebUI.delay(3)
 
 // printing JavaScript Console Log
-if (executedBrowser == WebUIDriverType.CHROME_DRIVER) {
+if (DriverFactory.getExecutedBrowser() == WebUIDriverType.CHROME_DRIVER) {
 	WebDriver driver = DriverFactory.getWebDriver()
 	LogEntries logs = driver.manage().logs().get("browser")
 	for (LogEntry entry : logs){
